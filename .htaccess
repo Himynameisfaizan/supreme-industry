@@ -1,0 +1,104 @@
+Options -MultiViews -Indexes
+RewriteEngine On
+RewriteBase /office_php_project/amsb-global/
+
+# Custom 404 Error Page
+ErrorDocument 404 /office_php_project/amsb-global/404.php
+
+# ==========================================================
+# 1. ADMIN PANEL, ASSETS & SITEMAP (Touch Nahi Karna)
+# ==========================================================
+RewriteRule ^admin(/|$) - [L,NC]
+RewriteRule ^assets(/|$) - [L,NC]
+RewriteRule ^uploads(/|$) - [L,NC]
+RewriteRule ^includes(/|$) - [L,NC]
+RewriteRule ^config(/|$) - [L,NC]
+
+# Sitemap
+RewriteRule ^sitemap\.xml$ sitemap.php [END,NC]
+
+# ==========================================================
+# 2. OLD URLs -> NEW CLEAN URLs (301 SEO Redirects)
+#    (POST requests excluded taaki forms submit hote rahein)
+# ==========================================================
+
+# index.php -> /
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} \s/[^\s?]*/?index\.php(?:[\s?]|$) [NC]
+RewriteRule ^index\.php$ /office_php_project/amsb-global/ [R=301,L]
+
+# category.php?slug=xyz -> category/xyz/
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} \s/[^\s?]*/?category\.php\? [NC]
+RewriteCond %{QUERY_STRING} (?:^|&)slug=([^&\s]+) [NC]
+RewriteRule ^category\.php$ category/%1/ [R=301,L,QSD,NE]
+
+# category.php (without slug) -> category/
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} \s/[^\s?]*/?category\.php[\s] [NC]
+RewriteRule ^category\.php$ category/ [R=301,L]
+
+# product-details.php?slug=xyz -> product/xyz
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} \s/[^\s?]*/?product-details\.php\? [NC]
+RewriteCond %{QUERY_STRING} (?:^|&)slug=([^&\s]+) [NC]
+RewriteRule ^product-details\.php$ product/%1 [R=301,L,QSD,NE]
+
+# blog-details.php?slug=xyz -> blog/xyz
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} \s/[^\s?]*/?blog-details\.php\? [NC]
+RewriteCond %{QUERY_STRING} (?:^|&)slug=([^&\s]+) [NC]
+RewriteRule ^blog-details\.php$ blog/%1 [R=301,L,QSD,NE]
+
+# page.php?slug=xyz -> page/xyz
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} \s/[^\s?]*/?page\.php\? [NC]
+RewriteCond %{QUERY_STRING} (?:^|&)slug=([^&\s]+) [NC]
+RewriteRule ^page\.php$ page/%1 [R=301,L,QSD,NE]
+
+# Old location/page/xyz -> page/xyz
+RewriteRule ^location/page/([^/\.]+)/?$ page/$1 [R=301,L,NE,NC]
+
+# Static .php pages -> /pagename/
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} \s/[^\s?]*/?(about|products|service|blog|contact|location|privacy-policy|refund-policy|shipping-policy|shipping-return|terms-and-conditions|terms-condition)\.php(?:[\s?]|$) [NC]
+RewriteRule ^([A-Za-z0-9_-]+)\.php$ $1/ [R=301,L,NC]
+
+# Trailing slash consistency:
+# Static pages & category -> trailing slash ON (/about/, /category/slug/)
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteRule ^(about|products|service|blog|contact|location|category|privacy-policy|refund-policy|shipping-policy|shipping-return|terms-and-conditions|terms-condition)$ $1/ [R=301,L,NC]
+RewriteRule ^category/([^/\.]+)$ category/$1/ [R=301,L,NE,NC]
+
+# Product, Blog Details & Custom Page -> trailing slash OFF (/product/slug, /blog/slug, /page/slug)
+RewriteRule ^product/([^/\.]+)/+$ product/$1 [R=301,L,NE,NC]
+RewriteRule ^blog/([^/\.]+)/+$ blog/$1 [R=301,L,NE,NC]
+RewriteRule ^page/([^/\.]+)/+$ page/$1 [R=301,L,NE,NC]
+
+# ==========================================================
+# 3. CLEAN URL INTERNAL REWRITES
+# ==========================================================
+
+# Category listing & single category
+RewriteRule ^category/$ category.php [END,QSA,NC]
+RewriteRule ^category/([^/\.]+)/$ category.php?slug=$1 [END,QSA,NC]
+
+# Product details
+RewriteRule ^product/([^/\.]+)$ product-details.php?slug=$1 [END,QSA,NC]
+
+# Blog details
+RewriteRule ^blog/([^/\.]+)$ blog-details.php?slug=$1 [END,QSA,NC]
+
+# Custom page
+RewriteRule ^page/([^/\.]+)$ page.php?slug=$1 [END,QSA,NC]
+
+# Static pages (/about/, /products/, /contact/, etc.)
+RewriteRule ^(about|products|service|blog|contact|location|privacy-policy|refund-policy|shipping-policy|shipping-return|terms-and-conditions|terms-condition)/$ $1.php [END,QSA,NC]
+
+# ==========================================================
+# 4. INVALID / WRONG URLs -> 404.php
+# ==========================================================
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpe?g|gif|webp|svg|ico|woff2?|ttf|pdf|xml|txt)$ [NC]
+RewriteRule ^ 404.php [END,L]

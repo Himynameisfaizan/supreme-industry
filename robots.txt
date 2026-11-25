@@ -1,0 +1,16 @@
+# robots.txt for AMSB GLOBAL (Wankaner, Morbi, Gujarat)
+
+User-agent: *
+Disallow: /admin/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /404.php
+Disallow: /newsletter-process.php
+Disallow: /inquiry-process.php
+
+Allow: /
+Allow: /assets/
+Allow: /uploads/
+
+# Live deploy karte waqt domain ko apne actual live domain (www ke sath ya bina) se replace kar dena
+Sitemap: https://www.amsbglobal.com/sitemap.xml
