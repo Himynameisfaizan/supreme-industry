@@ -35,6 +35,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
                 <li><a href="add-about-us-section.php"> About sections</a></li>
                 <li><a href="manage-meta.php"> Paage Meta</a></li>
                 <li><a href="manage-schema.php"> Page Schema</a></li>
+                <li><a href="show-certificates.php"> Certificate</a></li>
                  <li><a href="add_contact.php"><span>Contact Details</span>
                 <li><a href="view-testimonials.php">View Testimonials</a></li>
 
