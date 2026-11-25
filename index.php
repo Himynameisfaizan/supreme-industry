@@ -8,7 +8,7 @@ $gal     = q("SELECT image_name, image_path FROM gallery ORDER BY ID DESC LIMIT 
 $certs   = q("SELECT title, image FROM certificates WHERE status=1 ORDER BY cert_id DESC LIMIT 12");
 $tests   = q("SELECT name, designation, client_company, message, project_name FROM testimonials WHERE status=1 ORDER BY display_order, test_id DESC LIMIT 9");
 $blogs   = q("SELECT title, slug, image, description, created_at FROM blogs WHERE status=1 ORDER BY blog_id DESC LIMIT 3");
-$g = fn($i) => isset($gal[$i]) ? img('', $gal[$i]['image_path']) : PLACEHOLDER;
+$g = fn($i) => isset($gal[$i]) ? img('', $gal[$i]['image_path']) : 'assets/images/1.webp';
 ?>
 <main>
   <!-- HERO -->
