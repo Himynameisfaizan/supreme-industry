@@ -5,7 +5,7 @@ require_once __DIR__ . '/../config/connect.php';
 const CANONICAL_BASE = 'https://www.supremeindustry.in';
 
 // Image folders (admin panel ke upload folder ke hisaab se yahin change karein)
-const D_LOGO = 'uploads/', D_CAT = 'uploads/categories/', D_PRO = 'uploads/products/',
+const D_LOGO = 'uploads/', D_CAT = 'uploads/category/', D_PRO = 'uploads/products/',
       D_BLOG = 'uploads/blogs/', D_TEST = 'uploads/testimonials/', D_CERT = 'uploads/certificates/';
 const PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 3'%3E%3Crect width='4' height='3' fill='%23333'/%3E%3C/svg%3E";
 

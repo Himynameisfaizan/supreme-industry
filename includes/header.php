@@ -50,7 +50,7 @@ $nav = ['index.php' => 'Home', 'about.php' => 'About Us', 'products.php' => 'Pro
 <body>
   <header class="hdr" id="hdr">
     <a class="logo" href="<?= e($site) ?>" aria-label="Supreme Industry">
-      <?php if ($logo): ?><img src="<?= e(img(D_LOGO, $logo['logo_path'])) ?>" alt="Supreme Industry"><?php else: ?><span class="logo-txt">SUPREME<small>INDUSTRY</small></span><?php endif; ?>
+      <?php if ($logo): ?><img src="admin/<?= e(img(D_LOGO, $logo['logo_path'])) ?>" alt="Supreme Industry"><?php else: ?><span class="logo-txt">SUPREME<small>INDUSTRY</small></span><?php endif; ?>
     </a>
     <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
     <nav class="nav" id="nav">

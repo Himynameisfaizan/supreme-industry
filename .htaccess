@@ -1,9 +1,9 @@
 Options -MultiViews -Indexes
 RewriteEngine On
-RewriteBase /office_php_project/amsb-global/
+RewriteBase /office_php_project/supreme-industry/
 
 # Custom 404 Error Page
-ErrorDocument 404 /office_php_project/amsb-global/404.php
+ErrorDocument 404 /office_php_project/supreme-industry/404.php
 
 # ==========================================================
 # 1. ADMIN PANEL, ASSETS & SITEMAP (Touch Nahi Karna)
