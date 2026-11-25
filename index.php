@@ -100,7 +100,7 @@ $g = fn($i) => isset($gal[$i]) ? img('', $gal[$i]['image_path']) : 'assets/image
       </div>
     </div>
     <?php if ($certs): ?>
-      <div class="certs"><?php foreach ($certs as $c): ?><figure><img src="<?= e(img(D_CERT, $c['image'])) ?>" alt="<?= e($c['title']) ?>" loading="lazy">
+      <div class="certs"><?php foreach ($certs as $c): ?><figure><img src="admin/<?= e(img(D_CERT, $c['image'])) ?>" alt="<?= e($c['title']) ?>" loading="lazy">
             <figcaption><?= e($c['title']) ?></figcaption>
           </figure><?php endforeach; ?></div>
     <?php endif; ?>
