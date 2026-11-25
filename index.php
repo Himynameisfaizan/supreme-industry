@@ -66,7 +66,8 @@ $g = fn($i) => isset($gal[$i]) ? img('', $gal[$i]['image_path']) : 'assets/image
 
   <!-- WHY CHOOSE -->
   <section class="why">
-    <img class="why-big" src="<?= e($g(0)) ?>" alt="Prefab house by Supreme Industry" loading="lazy">
+    <!-- <img class="why-big" src="<?= e($g(0)) ?>" alt="Prefab house by Supreme Industry" loading="lazy"> -->
+    <img class="why-big" src="assets/images/1.webp" alt="Prefab house by Supreme Industry" loading="lazy">
     <div class="why-r rv">
       <h2 class="h-ico">Why Choose Supreme Industry</h2>
       <p class="lead">Catering our Clients only with the best Solutions</p>

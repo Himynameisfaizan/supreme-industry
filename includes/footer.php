@@ -1,6 +1,6 @@
 <?php
 $C = $C ?? contact();
-$flogo = q1("SELECT logo_path FROM logos WHERE location='footer' ORDER BY is_active DESC, id DESC LIMIT 1");
+$flogo = q1("SELECT logo_path FROM logos WHERE location='header' ORDER BY is_active DESC, id DESC LIMIT 1");
 $fcats = q("SELECT categories, slug_url FROM categories WHERE status=1 ORDER BY display_order, id LIMIT 6");
 $wp = preg_replace('/\D/', '', $C['wp_number'] ?? '') ?: '918743062634';
 $phone = $C['phone'] ?? '+91-8743062634';
@@ -9,7 +9,7 @@ $mail = $C['email'] ?? 'supremeindustry.in@gmail.com';
 <footer class="ftr">
   <div class="wrap ftr-grid">
     <div class="ftr-card">
-      <?php if ($flogo): ?><img class="flogo" src="<?= e(img(D_LOGO, $flogo['logo_path'])) ?>" alt="Supreme Industry"><?php else: ?><span class="logo-txt">SUPREME<small>INDUSTRY</small></span><?php endif; ?>
+      <?php if ($flogo): ?><img class="flogo" src="admin/<?= e(img(D_LOGO, $flogo['logo_path'])) ?>" alt="Supreme Industry"><?php else: ?><span class="logo-txt">SUPREME<small>INDUSTRY</small></span><?php endif; ?>
       <p>India's Top PUF Panel and Prefabricated Structure Manufacturer &amp; Installation Company.</p>
       <p><b><?= e($C['address'] ?? 'Unit No. 603-604 6th Floor Tower B Bhutani Alphathum, Sector 90 Noida (UP) Pin code 201305.') ?></b></p>
       <p><a href="tel:<?= e(preg_replace('/[^+\d]/', '', $phone)) ?>"><?= e($phone) ?></a></p>
