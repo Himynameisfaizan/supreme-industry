@@ -5,7 +5,7 @@ $banners = q("SELECT banner_path, title FROM banners ORDER BY display_order, id 
 $about   = q1("SELECT image_url, title, content FROM about_us ORDER BY id DESC LIMIT 1");
 $cats    = q("SELECT categories, slug_url, image FROM categories WHERE status=1 ORDER BY display_order, id");
 $gal     = q("SELECT image_name, image_path FROM gallery ORDER BY ID DESC LIMIT 3");
-$certs   = q("SELECT title, image FROM certificates WHERE status=1 ORDER BY cert_id DESC LIMIT 12");
+$certs   = q("SELECT title, image FROM certificates WHERE status=1 AND title NOT LIKE '%fssai%' ORDER BY cert_id DESC LIMIT 12");
 $tests   = q("SELECT name, designation, client_company, message, project_name FROM testimonials WHERE status=1 ORDER BY display_order, test_id DESC LIMIT 9");
 $blogs   = q("SELECT title, slug, image, description, created_at FROM blogs WHERE status=1 ORDER BY blog_id DESC LIMIT 3");
 $g = fn($i) => isset($gal[$i]) ? img('', $gal[$i]['image_path']) : 'assets/images/1.webp';
@@ -20,7 +20,7 @@ $g = fn($i) => isset($gal[$i]) ? img('', $gal[$i]['image_path']) : 'assets/image
     </div>
     <div class="hero-img" id="heroSlider">
       <?php foreach ($banners ?: [['banner_path' => '', 'title' => 'Prefab building']] as $i => $b): ?>
-        <img class="<?= $i === 0 ? 'on' : '' ?>" src="admin/<?= e(img('', $b['banner_path'])) ?>" alt="<?= e($b['title']) ?>" <?= $i ? 'loading="lazy"' : '' ?>>
+        <img class="<?= $i === 0 ? 'on' : '' ?>" src="<?= e($site) ?>admin/<?= e(img('', $b['banner_path'])) ?>" alt="<?= e($b['title']) ?>" <?= $i ? 'loading="lazy"' : '' ?>>
       <?php endforeach; ?>
       <div class="count"><b id="hsNow">1</b>/<span id="hsAll"><?= max(1, count($banners)) ?></span></div>
     </div>
@@ -28,7 +28,7 @@ $g = fn($i) => isset($gal[$i]) ? img('', $gal[$i]['image_path']) : 'assets/image
 
   <!-- ABOUT -->
   <section class="wrap about rv">
-    <img src="admin/uploads/<?= e(img('', $about['image_url'] ?? '')) ?>" alt="Supreme Industry prefabricated structure" loading="lazy">
+    <img src="<?= e($site) ?>admin/uploads/<?= e(img('', $about['image_url'] ?? '')) ?>" alt="Supreme Industry prefabricated structure" loading="lazy">
     <div>
       <h2 class="h-ico"><?= e($about['title'] ?? "India's Top PUF Panels Company!") ?></h2>
       <?php if (!empty($about['content'])): ?>
@@ -48,7 +48,7 @@ $g = fn($i) => isset($gal[$i]) ? img('', $gal[$i]['image_path']) : 'assets/image
       <div class="track" data-slider>
         <?php foreach ($cats as $c): ?>
           <a class="cat" href="<?= e($site) ?>products.php?cat=<?= e($c['slug_url']) ?>">
-            <img src="admin/<?= e(img(D_CAT, $c['image'])) ?>" alt="<?= e($c['categories']) ?>" loading="lazy">
+            <img src="<?= e($site) ?>admin/<?= e(img(D_CAT, $c['image'])) ?>" alt="<?= e($c['categories']) ?>" loading="lazy">
             <h3><?= e($c['categories']) ?></h3><span class="km">→ <u>KNOW MORE</u></span>
           </a>
         <?php endforeach; ?>
@@ -67,7 +67,7 @@ $g = fn($i) => isset($gal[$i]) ? img('', $gal[$i]['image_path']) : 'assets/image
   <!-- WHY CHOOSE -->
   <section class="why">
     <!-- <img class="why-big" src="<?= e($g(0)) ?>" alt="Prefab house by Supreme Industry" loading="lazy"> -->
-    <img class="why-big" src="assets/images/1.webp" alt="Prefab house by Supreme Industry" loading="lazy">
+    <img class="why-big" src="<?= e($site) ?>assets/images/1.webp" alt="Prefab house by Supreme Industry" loading="lazy">
     <div class="why-r rv">
       <h2 class="h-ico">Why Choose Supreme Industry</h2>
       <p class="lead">Catering our Clients only with the best Solutions</p>
@@ -100,11 +100,13 @@ $g = fn($i) => isset($gal[$i]) ? img('', $gal[$i]['image_path']) : 'assets/image
       </div>
     </div>
     <?php if ($certs): ?>
-      <div class="certs"><?php foreach ($certs as $c): ?><figure><img src="admin/<?= e(img(D_CERT, $c['image'])) ?>" alt="<?= e($c['title']) ?>" loading="lazy">
+      <div class="certs"><?php foreach ($certs as $c): ?><figure><img src="<?= e($site) ?>admin/<?= e(img(D_CERT, $c['image'])) ?>" alt="<?= e($c['title']) ?>" loading="lazy">
             <figcaption><?= e($c['title']) ?></figcaption>
           </figure><?php endforeach; ?></div>
     <?php endif; ?>
   </section>
+
+  <?php include __DIR__ . '/includes/fssai.php'; ?>
 
   <!-- TRUST 2: process -->
   <section class="proc rv">
@@ -136,7 +138,7 @@ $g = fn($i) => isset($gal[$i]) ? img('', $gal[$i]['image_path']) : 'assets/image
           <article class="tcard"><span class="q">”</span>
             <h3><?= e($t['project_name'] ?: 'Happy Client') ?></h3>
             <p><?= e($t['message']) ?></p>
-            <div class="who"><b><?= e($t['name']) ?></b><small><?= e(trim($t['designation'] . ($t['client_company'] ? ' - ' . $t['client_company'] : ''))) ?></small></div>
+            <div class="who"><b><?= e($t['name']) ?></b><small><?= e(trim($t['designation'] . ($t['client_company'] ? '-' . $t['client_company'] : ''))) ?></small></div>
           </article>
         <?php endforeach; ?>
       </div>
@@ -151,12 +153,13 @@ $g = fn($i) => isset($gal[$i]) ? img('', $gal[$i]['image_path']) : 'assets/image
       <div class="blogs">
         <?php foreach ($blogs as $b): ?>
           <a class="blog" href="<?= e($site) ?>blog.php?slug=<?= e($b['slug']) ?>">
-            <img src="admin/assets/img/<?= e(img(D_BLOG, $b['image'])) ?>" alt="<?= e($b['title']) ?>" loading="lazy">
+            <img src="<?= e($site) ?>admin/assets/img/<?= e(img(D_BLOG, $b['image'])) ?>" alt="<?= e($b['title']) ?>" loading="lazy">
             <h3><?= e($b['title']) ?></h3>
             <p><?= e(plain($b['description'], 110)) ?></p>
           </a>
         <?php endforeach; ?>
       </div>
+      <p class="h-c" style="margin-top:26px"><a class="btn" href="<?= e($site) ?>blogs.php">VIEW ALL BLOGS <span>→</span></a></p>
     </section>
   <?php endif; ?>
 </main>

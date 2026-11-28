@@ -17,10 +17,10 @@ if ($local) {
     $site = "http://localhost/office_php_project/supreme-industry/";
 } else {
     $host = 'localhost';
-    $username = 'u799879276_supreme_ind';
-    $password = 'Supreme@ind1';
-    $dbName = 'u799879276_supreme_ind';
-    $site = 'rustic-goldenrod-elk-08.hostingersite.com';
+    $username = 'u799879276_amsb_global';
+    $password = 'Amsb@global1';
+    $dbName = 'u799879276_amsb_global';
+    $site = 'https://wandering-honeydew-hippopotamus-07.hostingersite.com/';
 }
 
 // Make `$site` global

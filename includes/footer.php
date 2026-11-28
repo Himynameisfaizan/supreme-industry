@@ -1,7 +1,7 @@
 <?php
 $C = $C ?? contact();
 $flogo = q1("SELECT logo_path FROM logos WHERE location='header' ORDER BY is_active DESC, id DESC LIMIT 1");
-$fcats = q("SELECT categories, slug_url FROM categories WHERE status=1 ORDER BY display_order, id LIMIT 6");
+$fcats = q("SELECT pro_name, slug_url FROM products WHERE status=1 ORDER BY display_order, id LIMIT 6");
 $wp = preg_replace('/\D/', '', $C['wp_number'] ?? '') ?: '918743062634';
 $phone = $C['phone'] ?? '+91-8743062634';
 $mail = $C['email'] ?? 'supremeindustry.in@gmail.com';
@@ -9,7 +9,7 @@ $mail = $C['email'] ?? 'supremeindustry.in@gmail.com';
 <footer class="ftr">
   <div class="wrap ftr-grid">
     <div class="ftr-card">
-      <?php if ($flogo): ?><img class="flogo" src="admin/<?= e(img(D_LOGO, $flogo['logo_path'])) ?>" alt="Supreme Industry"><?php else: ?><span class="logo-txt">SUPREME<small>INDUSTRY</small></span><?php endif; ?>
+      <?php if ($flogo): ?><img class="flogo" src="<?= e($site) ?>admin/<?= e(img(D_LOGO, $flogo['logo_path'])) ?>" alt="Supreme Industry"><?php else: ?><span class="logo-txt">SUPREME<small>INDUSTRY</small></span><?php endif; ?>
       <p>India's Top PUF Panel and Prefabricated Structure Manufacturer &amp; Installation Company.</p>
       <p><b><?= e($C['address'] ?? 'Unit No. 603-604 6th Floor Tower B Bhutani Alphathum, Sector 90 Noida (UP) Pin code 201305.') ?></b></p>
       <p><a href="tel:<?= e(preg_replace('/[^+\d]/', '', $phone)) ?>"><?= e($phone) ?></a></p>
@@ -25,9 +25,9 @@ $mail = $C['email'] ?? 'supremeindustry.in@gmail.com';
       <li><a href="<?= e($site) ?>contact-us.php">Contact Us</a></li></ul></div>
     <div><h4>Important Links</h4><ul>
       <li><a href="<?= e($site) ?>sitemap.xml">Sitemap</a></li><li><a href="<?= e($site) ?>privacy-policy.php">Privacy Policy</a></li>
-      <li><a href="<?= e($site) ?>terms-and-conditions.php">Terms &amp; Conditions</a></li><li><a href="<?= e($site) ?>blogs.php">Blogs</a></li></ul></div>
+      <li><a href="<?= e($site) ?>terms-and-conditions.php">Terms &amp; Conditions</a></li><li><a href="<?= e($site) ?>our-presence.php">Our Presence</a></li></ul></div>
     <div><h4>Products</h4><ul>
-      <?php foreach ($fcats as $c): ?><li><a href="<?= e($site) ?>products.php?cat=<?= e($c['slug_url']) ?>"><?= e($c['categories']) ?></a></li><?php endforeach; ?></ul></div>
+      <?php foreach ($fcats as $c): ?><li><a href="<?= e($site) ?>product-details.php?slug=<?= e($c['slug_url']) ?>"><?= e($c['pro_name']) ?></a></li><?php endforeach; ?></ul></div>
   </div>
   <p class="copy"><?= ($C['copyright_text'] ?? '') ?: 'Copyright © ' . date('Y') . ' Supreme Industry | All Rights Reserved' ?></p>
 </footer>
